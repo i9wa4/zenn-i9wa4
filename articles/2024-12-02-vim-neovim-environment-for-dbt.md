@@ -6,8 +6,8 @@ topics:
   - "dbt"
   - "vim"
   - "neovim"
-published: false
-# published_at: 2024-12-02 08:00
+published: true
+published_at: 2024-12-02 08:00
 publication_name: "genda_jp"
 ---
 
