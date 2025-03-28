@@ -35,13 +35,13 @@ https://www.notion.com/ja/help/relations-and-rollups#リレーションの表示
 
 ![](/images/2025-03-28-display-notion-relation-property-as-section/item_master.png)
 
-#### 2.2. transaction_a
+#### 2.1.2. transaction_a
 
 item_master をプロパティに追加させたいデータベースです。
 
 ![](/images/2025-03-28-display-notion-relation-property-as-section/transaction_a.png)
 
-### 2.3. リレーションプロパティの追加
+### 2.2. リレーションプロパティの追加
 
 データベース全体の設定を行うのではなく、1アイテムを編集→全体適用でいきます。
 
