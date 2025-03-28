@@ -58,7 +58,7 @@ item_master をプロパティに追加させたいデータベースです。
     ![](/images/2025-03-28-display-notion-relation-property-as-section/05-add-relation.png)
 1. すべてのページに適用する
     ![](/images/2025-03-28-display-notion-relation-property-as-section/06-apply.png)
-1. リレーションプロパティの「…」から表示させたい
+1. リレーションプロパティの「…」から表示させたいプロパティを選択する
     ![](/images/2025-03-28-display-notion-relation-property-as-section/07-set-property.png)
 1. 完了
     ![](/images/2025-03-28-display-notion-relation-property-as-section/goal.png)
