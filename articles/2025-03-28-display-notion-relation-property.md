@@ -35,7 +35,7 @@ https://www.notion.com/ja/help/relations-and-rollups#リレーションの表示
 
 ![](/images/2025-03-28-display-notion-relation-property-as-section/item_master.png)
 
-### 2.2. transaction_a
+#### 2.2. transaction_a
 
 item_master をプロパティに追加させたいデータベースです。
 
