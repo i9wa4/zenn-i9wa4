@@ -11,5 +11,13 @@
   "description": "",
   "dependencies": {
     "zenn-cli": "^0.1.158"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/i9wa4/zenn-i9wa4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/i9wa4/zenn-i9wa4/issues"
+  },
+  "homepage": "https://github.com/i9wa4/zenn-i9wa4#readme"
 }
