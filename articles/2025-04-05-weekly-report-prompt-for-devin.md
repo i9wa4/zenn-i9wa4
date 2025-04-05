@@ -100,7 +100,7 @@ YYYY/MM/DD(aaa)～YYYY/MM/DD(aaa)
 - [Merged] [pull request] [pull request title #124](pull request url)
 - [Open] [issue] [issue #106](issue url)
 
-### 4.2. 他メンバーはこのような記述にする
+### 5.2. 他メンバーはこのような記述にする
 
 <!-- 集計期間に活動があれば上記と同様の形式で記入してください。 -->
 ```
