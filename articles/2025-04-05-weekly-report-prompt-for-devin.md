@@ -85,7 +85,7 @@ YYYY/MM/DD(aaa)～YYYY/MM/DD(aaa)
 <!-- 集計期間に活動があれば上記と同様の形式で記入してください。 -->
 ```
 
-## 4. Comment (1)
+### 3.4. Comment (1)
 
 ```markdown
 ## 5. 詳細
@@ -105,7 +105,7 @@ YYYY/MM/DD(aaa)～YYYY/MM/DD(aaa)
 <!-- 集計期間に活動があれば上記と同様の形式で記入してください。 -->
 ```
 
-## 5. Comment (2)
+### 3.5. Comment (2)
 
 ```markdown
 ## 6. Devin への指示内容
