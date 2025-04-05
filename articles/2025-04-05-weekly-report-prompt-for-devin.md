@@ -16,7 +16,7 @@ https://zenn.dev/genda_jp/articles/2025-04-05-weekly-report-by-devin
 
 生の Markdown は以下を参照してください。
 
-https://github.com/i9wa4/zenn-dev/blob/main/articles/2025-04-05-weekly-report-prompt-for-devin.md?plain=1
+https://github.com/i9wa4/zenn-i9wa4/blob/main/articles/2025-04-05-weekly-report-prompt-for-devin.md?plain=1
 
 ## 1. 人間への補足
 
