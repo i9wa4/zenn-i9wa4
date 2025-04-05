@@ -14,7 +14,7 @@ publication_name: "genda_jp"
 https://zenn.dev/genda_jp/articles/2025-04-05-weekly-report-by-devin
 
 
-生の Markdown は以下を参照してください。
+本記事の生の Markdown は以下です。
 
 https://github.com/i9wa4/zenn-i9wa4/blob/main/articles/2025-04-05-weekly-report-prompt-for-devin.md?plain=1
 
