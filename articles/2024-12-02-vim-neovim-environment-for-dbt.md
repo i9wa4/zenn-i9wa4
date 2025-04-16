@@ -1,5 +1,5 @@
 ---
-title: "Vim/Neovimのdbt開発環境の現状とVimを救う話"
+title: "Vim/Neovim の dbt 開発環境の現状と Vim を救う話"
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
