@@ -46,9 +46,9 @@ export DATABRICKS_HOST="your-databricks-instance.cloud.databricks.com"
 export DATABRICKS_TOKEN="your-databricks-access-token"
 export DATABRICKS_SQL_WAREHOUSE_ID="your-sql-warehouse-id"
 # for OAuth authentication
-export DATABRICKS_CLIENT_ID=your-client-id
-export DATABRICKS_CLIENT_SECRET=your-client-secret
-export DATABRICKS_AUTH_TYPE=oauth
+export DATABRICKS_CLIENT_ID="your-client-id"
+export DATABRICKS_CLIENT_SECRET="your-client-secret"
+export DATABRICKS_AUTH_TYPE="oauth"
 ```
 
 `DATABRICKS_CLIENT_ID` と `DATABRICKS_CLIENT_SECRET` の作成方法は以下のドキュメントを参考にしてください。
