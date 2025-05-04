@@ -7,7 +7,7 @@ topics:
   - "zsh"
   - "git"
 published: true
-published_at: 2025-05-04 22:50:38 +0900
+published_at: 2025-05-04 22:50:38
 ---
 
 ## 1. はじめに
