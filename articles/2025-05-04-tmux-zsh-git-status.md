@@ -30,7 +30,11 @@ tmux 上の表示内容が結構気に入ったので同様の表示を Zsh プ�
 
 どのステータスを表示させたいかは人によって異なると思いますが、今回は後述する tmux のプラグインの表示内容に沿って以下の情報を表示させることとしました。
 
-### 3.1. [Untracked files] ステージングされていない新規作成ファイル数
+### 3.1. ブランチ名
+
+説明不要の重要要素。
+
+### 3.2. [Untracked files] ステージングされていない新規作成ファイル数
 
 `git status` で
 
@@ -58,7 +62,7 @@ Untracked files:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-### 3.2. [Unstaged files] ステージングされていない変更のあるファイル数
+### 3.3. [Unstaged files] ステージングされていない変更のあるファイル数
 
 `git status` で
 
@@ -83,7 +87,7 @@ $ git diff --shortstat
  2 files changed, 5 insertions(+), 5 deletions(-)
 ```
 
-### 3.3. [Inserted lines] 追加行数
+### 3.4. [Inserted lines] 追加行数
 
 ステージングされていない変更のうち追加部分の行数です。
 
@@ -94,7 +98,7 @@ $ git diff --shortstat
  2 files changed, 5 insertions(+), 5 deletions(-)
 ```
 
-### 3.4. [Deleted lines] 削除行数
+### 3.5. [Deleted lines] 削除行数
 
 ステージングされていない変更のうち削除部分の行数です。
 
