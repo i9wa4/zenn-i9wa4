@@ -386,7 +386,7 @@ https://quarto.org/docs/presentations/revealjs/presenting.html
 
 https://github.com/quarto-dev/quarto-cli/blob/main/src/resources/formats/revealjs/quarto.scss
 
-基本的にはここに登場する変数の値のうち上書きしたいものを `custom.scss` に記載していけばよいです。
+基本的にはここに登場する変数の値のうちオーバーライドしたいものを `custom.scss` に記載していけばよいです。
 
 不明点がある場合は先述しましたが DeepWiki が便利なので活用できますね。
 
@@ -414,7 +414,7 @@ $anyfgcolor: #ffffff;
 }
 ```
 
-基本的には SCSS の変数を上書きしていく形で事足りるとは思います。
+基本的には SCSS の変数をオーバーライドしていく形で事足りるとは思います。
 
 ## 12. おわりに
 
