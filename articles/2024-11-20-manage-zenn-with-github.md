@@ -3,8 +3,8 @@ title: "Zenn の記事を GitHub リポジトリで管理する"
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
-  - "github"
-  - "zenn"
+  - "GitHub"
+  - "Zenn"
 published: true
 published_at: 2024-11-20 18:00
 ---

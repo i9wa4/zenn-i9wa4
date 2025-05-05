@@ -3,7 +3,7 @@ title: "データエンジニアが初めてダッシュボードを作成して
 emoji: "🐴"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics:
-  - "databricks"
+  - "Databricks"
 published: true
 published_at: 2024-12-23 07:00
 publication_name: "genda_jp"
