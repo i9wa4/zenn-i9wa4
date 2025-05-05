@@ -31,9 +31,6 @@ GitHub Pages での公開方法が気になる方は以下の記事を参考に�
 
 https://i9wa4.github.io/blog/2024-08-25-publishing-github-pages-with-quarto.html
 
-Quarto では .qmd という拡張子のファイルを使用します。VS Code の場合は Quarto 拡張機能をインストールすることで編集体験が向上しますので是非検討してみてください。
-ここでは誰でも再現可能な手順の説明に終始するため VS Code の Quarto 拡張機能に関する説明は省きます。
-
 ## 4. この記事でやること
 
 - Quarto 向けリポジトリを作成する
@@ -60,7 +57,14 @@ pip install quarto
 
 https://quarto.org/docs/get-started/
 
-### 6.2. GitHub リポジトリを作成する
+### 6.2. (任意) VS Code の Quarto の拡張機能をインストールする
+
+https://marketplace.visualstudio.com/items?itemName=quarto.quarto
+
+Quarto では .qmd という拡張子のファイルを使用します。VS Code の場合は Quarto 拡張機能をインストールすることで編集体験が向上しますので是非検討してみてください。
+ここでは誰でも再現可能な手順の説明に終始するため VS Code の Quarto 拡張機能に関する説明は省きます。
+
+### 6.3. GitHub リポジトリを作成する
 
 空のリポジトリを作ったあと以下の構成を作っていきます。
 
@@ -82,7 +86,7 @@ https://quarto.org/docs/get-started/
 
 以下で各ファイルの説明をしていくので真似て作成してみてください。
 
-#### 6.2.1. `_quarto.yml`
+#### 6.3.1. `_quarto.yml`
 
 プロジェクトの設定を記述しておくファイルです。
 
@@ -128,7 +132,7 @@ format:
       data-background-size: "cover"
 ```
 
-#### 6.2.2. `.github/workflows/deploy.yml`
+#### 6.3.2. `.github/workflows/deploy.yml`
 
 HTML 出力させる GitHub Actions ワークフロー設定ファイルの例です。
 
@@ -180,7 +184,7 @@ jobs:
           clean: true
 ```
 
-#### 6.2.3. `.gitignore`
+#### 6.3.3. `.gitignore`
 
 Quarto の生成物を無駄に GitHub に push したくないので作成しておきます。
 
@@ -189,17 +193,17 @@ Quarto の生成物を無駄に GitHub に push したくないので作成し�
 /_output/
 ```
 
-#### 6.2.4. `assets/common/title-background.jpg`
+#### 6.3.4. `assets/common/title-background.jpg`
 
 タイトルスライドの背景画像を指定するための画像ファイルです。なくても良いです。
 
-#### 6.2.5. `custom.scss`
+#### 6.3.5. `custom.scss`
 
 Quarto で作成するスライドの見た目をカスタマイズするためのファイルです。名前は任意です。
 
 ここでは一旦不要ですが編集のコツを後述しますので所定のスライドテンプレートの反映に活用してください。
 
-#### 6.2.6. `index.qmd`
+#### 6.3.6. `index.qmd`
 
 Quarto のトップページを作成するためのファイルです。
 
@@ -224,11 +228,11 @@ format:
 :::
 ```
 
-### 6.3. GitHub に push する
+### 6.4. GitHub に push する
 
 一旦ここまで作成できたらキリが良いので GitHub に push しておきましょう。
 
-### 6.4. スライドを作成する
+### 6.5. スライドを作成する
 
 よくある記法を記載しましたので参考にしてください。
 
