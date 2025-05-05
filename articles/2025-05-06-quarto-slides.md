@@ -370,7 +370,7 @@ HTML ファイルを Web ブラウザで開くと以下のような表示にな�
 
 ![](/images/2025-05-06-quarto-slides/02-quarto.png)
 
-その他の詳しくは下記ページを参照してください。
+その他詳細は下記ページを参照してください。
 
 https://quarto.org/docs/presentations/revealjs/presenting.html
 
