@@ -52,7 +52,7 @@ https://i9wa4.github.io/blog/2024-08-25-publishing-github-pages-with-quarto.html
 Python 環境のある方は pip でインストールできます。
 
 ```{sh}
-pip install quarto
+pip install quarto-cli
 ```
 
 公式からインストーラも提供されています。私は利用したことがないため詳細の説明は省きます。
