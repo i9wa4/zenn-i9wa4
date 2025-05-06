@@ -3,8 +3,8 @@ title: "Devin 週報作成用プロンプト"
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
-  - "Devin"
-  - "GitHub"
+  - "devin"
+  - "github"
 published: true
 publication_name: "genda_jp"
 ---

@@ -3,8 +3,8 @@ title: "Databricks MCP Server を Service Principal 認証対応させた"
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
-  - "Databricks"
-  - "MCP"
+  - "databricks"
+  - "mcp"
 published: true
 publication_name: "genda_jp"
 ---

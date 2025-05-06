@@ -3,7 +3,7 @@ title: "Notion データベースでリレーション元のプロパティを�
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
-  - "Notion"
+  - "notion"
 published: true
 publication_name: "genda_jp"
 ---

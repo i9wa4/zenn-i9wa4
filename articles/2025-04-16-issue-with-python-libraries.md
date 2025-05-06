@@ -3,7 +3,7 @@ title: "Python でありがちな本体バージョンとライブラリバー�
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
-  - "Python"
+  - "python"
 published: true
 publication_name: "genda_jp"
 ---

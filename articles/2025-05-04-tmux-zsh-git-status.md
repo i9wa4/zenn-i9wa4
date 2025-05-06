@@ -4,8 +4,8 @@ emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
   - "tmux"
-  - "Zsh"
-  - "Git"
+  - "zsh"
+  - "git"
 published: true
 ---
 

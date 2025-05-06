@@ -3,8 +3,9 @@ title: "Markdown ライクな Quarto でスライドを作成して GitHub Actio
 emoji: "🐴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics:
-  - "Quarto"
-  - "GitHubActions"
+  - "quarto"
+  - "githubactions"
+  - "revealjs"
 published: true
 ---
 
@@ -35,7 +36,7 @@ https://i9wa4.github.io/blog/2024-08-25-publishing-github-pages-with-quarto.html
 ## 4. この記事でやること
 
 - Quarto 向けリポジトリを作成する
-- Quarto でスライドを作成する
+- Quarto (reveal.js) でスライドを作成する
 - GitHub Actions で HTML 出力する
 
 ## 5. この記事でやらないこと
