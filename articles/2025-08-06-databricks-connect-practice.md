@@ -480,7 +480,7 @@ else:
 
 上の参考コードにも記載ありますが Databricks での実行時のみ Python パッケージをインストールする HACK な方法です。
 
-uv を使っていない場合は `%pip install <package>` で大丈夫です。
+uv を使っていない場合は `%pip install <package>` 等で大丈夫です。
 
 ```python
 import os
