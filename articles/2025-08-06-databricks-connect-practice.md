@@ -455,6 +455,7 @@ if not os.environ.get("DATABRICKS_RUNTIME_VERSION"):
     # === ローカル環境の場合 ===
     # Databricks Connect を使用してリモートクラスターに接続する
     if project_root and (project_root / '.devcontainer').exists():
+        # NOTE: databricks_setup.py のパスを追加
         sys.path.insert(0, str(project_root / '.devcontainer'))
         from databricks_setup import setup_spark, setup_dbutils_mock, setup_display_function
 
