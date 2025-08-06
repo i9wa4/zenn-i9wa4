@@ -478,14 +478,15 @@ else:
 
 ## 8. ノートブックでの Python モジュールインストール方法
 
-Databricks での実行時のみ Python パッケージをインストールする HACK な方法です。
+上の参考コードにも記載ありますが Databricks での実行時のみ Python パッケージをインストールする HACK な方法です。
 
 uv を使っていない場合は `%pip install <package>` で大丈夫です。
 
 ```python
 import os
+
 if os.environ.get("DATABRICKS_RUNTIME_VERSION"):
-    %pip install uv
+    # NOTE: uv は DBR にインストールされている
     %pip install -r <(uv pip compile pyproject.toml --color never)
 ```
 
