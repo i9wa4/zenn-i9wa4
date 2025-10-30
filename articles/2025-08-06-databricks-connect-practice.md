@@ -1,5 +1,5 @@
 ---
-title: "Databricks Connect 実践編 - ローカルから Databricks コンピュートを利用"
+title: "Databricks Connect 実践編 ― ローカルから Databricks コンピュートを利用"
 emoji: "🚀"
 type: "tech"
 topics:

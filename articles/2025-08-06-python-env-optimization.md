@@ -1,5 +1,5 @@
 ---
-title: "Python 開発環境最適化編 - uv + pre-commit + GitHub Actions"
+title: "Python 開発環境最適化編 ― uv + pre-commit + GitHub Actions"
 emoji: "🐍"
 type: "tech"
 topics:
