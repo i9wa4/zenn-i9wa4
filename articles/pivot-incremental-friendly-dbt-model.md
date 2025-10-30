@@ -4,7 +4,7 @@ emoji: "📊"
 type: "idea"
 topics: ["dbt", "dataengineering", "データ分析"]
 published: true
-published_at: 2025-10-31 7:00
+published_at: 2025-10-31 07:00
 publication_name: "pivotmedia"
 ---
 
