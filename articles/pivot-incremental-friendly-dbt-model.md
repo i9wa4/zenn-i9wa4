@@ -65,6 +65,7 @@ base_events as (
     {% if is_incremental() %}
         where
             -- incremental 時は直近 N 日分のみ処理 (デフォルト3日)
+            -- NOTE: date() 利用時のタイムゾーンの扱いに注意
             date(event_datetime_jst) >= date_sub(
                 current_date("Asia/Tokyo"),
                 interval {{ var("touch_lookback_days", 3) }} day
@@ -180,7 +181,7 @@ from merged_touches mt
 
 ### 5.1. 技術的な成果
 
-- 処理データ量は約 1/50 に削減
+- データスキャン量は約 1/50 に削減
     - full-refresh: 24.6 GiB
     - incremental: 約 500 MiB (3日分の差分)
     - 利用する DWH が BigQuery のためスキャン量削減は重要
