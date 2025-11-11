@@ -206,9 +206,6 @@ jobs:
           path: ~/.cache/pre-commit
           key: |
             pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}-${{ hashFiles('uv.lock') }}
-          # NOTE: 設定ファイルの変更時に必ずキャッシュを更新する
-          restore-keys: |
-            pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}-${{ hashFiles('uv.lock') }}
 
       - name: Install pre-commit
         run: |
