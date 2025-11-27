@@ -14,7 +14,7 @@ published_at: 2025-12-01 07:00
 ## 1. はじめに
 
 株式会社GENDA データエンジニア / MLOps エンジニアの uma-chan です。
-この記事は GENDA Advent Calendar 2025 1日目の記事です。
+この記事は GENDA Advent Calendar 2025 シリーズ1 1日目の記事です。
 
 https://qiita.com/advent-calendar/2025/genda
 
