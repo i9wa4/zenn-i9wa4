@@ -30,6 +30,10 @@ https://qiita.com/advent-calendar/2025/genda
 これらのツールは対話的に使うだけでなく、シェルスクリプトに組み込んで自動化に活用することもできます。
 本記事では私が日常的に使っているシェルスクリプトに Claude Code を導入した実践例を紹介します。
 
+:::message
+本記事の内容は 2025年12月時点での検証結果に基づいています。
+:::
+
 ## 2. 対象読者
 
 - シェルスクリプトに抵抗がない方
@@ -39,7 +43,7 @@ https://qiita.com/advent-calendar/2025/genda
 
 各 AI CLI ツールには、プロンプトを渡して結果を受け取る非対話モードが用意されています。
 
-### 3.1. 各ツールのコマンド (2025/12/01 時点)
+### 3.1. 各ツールのコマンド
 
 | ツール             | コマンド例                |
 | ---                | ---                       |
@@ -67,6 +71,8 @@ Claude Code だけが余計な出力なしで純粋な結果のみを返しま�
 ## 4. 題材スクリプトの紹介
 
 私が日常的に使っている `issue-worktree-create` というスクリプトを題材にします。
+
+以下は執筆時点のバージョンのスクリプトです。
 
 https://github.com/i9wa4/dotfiles/blob/f92d338fb8e21ba915df1ee077d53eafafa1a118/bin/issue-worktree-create
 
@@ -174,15 +180,15 @@ Claude Code の非対話モードはAIに安定した出力を期待できる場
 ### 6.1. コミットメッセージの生成
 
 ```bash
-commit_msg=$(git diff --staged | claude -p "以下の差分から適切なコミットメッセージを1行で生成してください。Conventional Commits 形式で。出力はメッセージのみ。")
+commit_msg=$(GIT_PAGER=cat git diff --staged --no-color | claude -p "以下の差分から適切なコミットメッセージを1行で生成してください。Conventional Commits 形式で。出力はメッセージのみ。")
 git commit -m "$commit_msg"
 ```
 
 ### 6.2. ファイル名のリネーム
 
 ```bash
-new_name=$(claude -p "以下のファイル名を英語の kebab-case に変換してください。出力はファイル名のみ。: $old_name")
-mv "$old_name" "$new_name"
+new_name=$(claude -p "以下のファイル名を英語の kebab-case に変換してください。出力はファイル名のみ。: ${old_name}")
+mv "${old_name}" "${new_name}"
 ```
 
 ### 6.3. ログの要約
