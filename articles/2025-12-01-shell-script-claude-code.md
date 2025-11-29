@@ -50,7 +50,7 @@ https://qiita.com/advent-calendar/2025/genda
 | Claude Code        | `claude -p "プロンプト"`  |
 | Gemini CLI         | `gemini "プロンプト"`     |
 | GitHub Copilot CLI | `copilot -p "プロンプト"` |
-| OpenAI Codex CLI   | `codex exec "プロンプト"` |
+| Codex CLI          | `codex exec "プロンプト"` |
 
 ### 3.2. シェルスクリプトでの利用における重要な違い
 
