@@ -8,9 +8,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/i9wa4/zenn-i9wa4)",
   "dependencies": {
-    "zenn-cli": "^0.2.0"
+    "zenn-cli": "^0.2.10"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,6 @@
   "bugs": {
     "url": "https://github.com/i9wa4/zenn-i9wa4/issues"
   },
-  "homepage": "https://github.com/i9wa4/zenn-i9wa4#readme"
+  "homepage": "https://github.com/i9wa4/zenn-i9wa4#readme",
+  "type": "commonjs"
 }
