@@ -17,7 +17,7 @@ published_at: 2025-12-04 07:00
 株式会社GENDA データエンジニア / MLOps エンジニアの uma-chan です。
 この記事は GENDA Advent Calendar 2025 シリーズ3 Day 4 の記事です。
 
-<https://qiita.com/advent-calendar/2025/genda>
+https://qiita.com/advent-calendar/2025/genda
 
 Vim と tmux を活用して複数の AI エージェント (Claude Code、Codex CLI) による多数決レビューの仕組みを構築しました。
 
@@ -43,14 +43,14 @@ Vim と tmux を活用して複数の AI エージェント (Claude Code、Codex
 
 #### 3.1.1. vde-layout
 
-<https://github.com/yuki-yano/vde-layout>
+https://github.com/yuki-yano/vde-layout
 
 `vde-layout` コマンドを実行することで予め設定した tmux レイアウトを適用できます。
 YAML で定義したレイアウトを一発で構築できるため、毎回手動でペイン分割する手間が省けます。
 
 #### 3.1.2. vim-tmux-send-to-ai-cli
 
-<https://github.com/i9wa4/vim-tmux-send-to-ai-cli>
+https://github.com/i9wa4/vim-tmux-send-to-ai-cli
 
 Vim から tmux 経由で AI エージェント起動中のペインにプロンプトを送信するためのプラグインです。
 
@@ -70,12 +70,12 @@ Vim から tmux 経由で AI エージェント起動中のペインにプロン
 
 #### 3.1.3. ddc-source-slash-commands
 
-<https://github.com/i9wa4/ddc-source-slash-commands>
+https://github.com/i9wa4/ddc-source-slash-commands
 
 Vim 補完プラグイン ddc.vim のソースプラグインです。
 カスタムスラッシュコマンドを補完候補として表示します。
 
-<https://github.com/Shougo/ddc.vim>
+https://github.com/Shougo/ddc.vim
 
 カスタムスラッシュコマンドに対応していない AI エージェントの場合はファイルのフルパスを送信すれば問題ありません。
 
@@ -84,9 +84,9 @@ Vim 補完プラグイン ddc.vim のソースプラグインです。
 - Claude Code: Anthropic 公式の CLI ツール。Claude Opus/Sonnet を利用可能
 - Codex CLI: OpenAI 公式の CLI ツール。o3/o4-mini を利用可能
 
-<https://docs.anthropic.com/en/docs/claude-code>
+https://docs.anthropic.com/en/docs/claude-code
 
-<https://github.com/openai/codex>
+https://github.com/openai/codex
 
 ### 3.2. レイアウト構成
 
@@ -112,7 +112,7 @@ Vim 補完プラグイン ddc.vim のソースプラグインです。
 
 詳細は下記の記事を参照してください。
 
-<https://i9wa4.github.io/blog/2025-11-19-vim-tmux-orchestrating-ai-coding-agents.html>
+https://i9wa4.github.io/blog/2025-11-19-vim-tmux-orchestrating-ai-coding-agents.html
 
 ### 3.4. vde-layout 設定
 
