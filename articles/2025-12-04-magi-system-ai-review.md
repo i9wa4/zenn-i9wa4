@@ -254,10 +254,7 @@ vim-tmux-send-to-ai-cli の機能で、`/my-review` を全 AI エージェント
 
 レビューが終わったあといずれかのペインに `/summarize-reviews` を送信すると、全レビュー結果を集約した `.i9wa4/YYYYMMDD-pX-review.md` が生成されます。
 
-集約ファイルには指摘タイトル・重要度・指摘者の対応表が含まれます。
-複数エージェントが同じ点を指摘した場合は優先度高として扱えます。
-
-## 7. Tips
+## 7. その他 Tips
 
 ### 7.1. global gitignore ディレクトリの活用
 
