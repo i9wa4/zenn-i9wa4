@@ -113,7 +113,6 @@ Vim から tmux 経由で AI エージェント起動中のペインにプロン
 設定ファイルはこちら。
 
 ```yaml:~/.config/vde/layout.yml
-# ~/.config/vde/layout.yml
 presets:
   review:
     name: review
