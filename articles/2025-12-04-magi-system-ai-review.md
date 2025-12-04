@@ -256,7 +256,7 @@ vim-tmux-send-to-ai-cli の機能で、`/my-review` を全 AI エージェント
 
 ### 6.4. 結果の統合
 
-レビューが終わったあといずれかのペインに `/summarize-reviews` を送信すると、全レビュー結果を集約した `.i9wa4/YYYYMMDD-pX-review.md` が生成されます。
+レビューが終わったあといずれかのペインに `/summarize-reviews` を送信すると、全レビュー結果を集約した `.i9wa4/YYYYMMDD-all-reviews.md` が生成されます。
 
 ## 7. その他 Tips
 
