@@ -1,5 +1,5 @@
 ---
-title: "AI時代のガードレール ― PR作成環境を問わず継続的に更新する構成 (mise + pre-commit + Renovate)"
+title: "ローカル・クラウド両対応ガードレールを作り継続更新する ― AI時代の開発環境 (mise + pre-commit + Renovate)"
 emoji: "🐴"
 type: "tech"
 topics:
@@ -72,15 +72,13 @@ asdf の後継として開発され、より高速でシンプルな体験を提
 
 主な利点
 
-- クロスプラットフォーム: `node = "20"` と書くだけで mise がプラットフォームに合ったバイナリを取得
-- 多様なバックエンド: aqua, cargo, go, npm 等からもインストール可能
-- チーム共有: `mise install` で全員が同じ環境を再現
+- クロスプラットフォーム
+- 多様なバックエンド (aqua, cargo, go, npm 等からもインストール可能)
+- `mise install` で全員が同じ環境を再現
 
-詳細は公式ドキュメントを参照してください。
+注意点
 
-- [Getting Started](https://mise.jdx.dev/getting-started.html)
-- [Configuration](https://mise.jdx.dev/configuration.html)
-- [Dev Tools](https://mise.jdx.dev/dev-tools/)
+- バックエンドによってはビルドが必要になるので環境によってはインストールに失敗することがあります
 
 ### 3.2. インストール
 
@@ -108,21 +106,8 @@ shellcheck = "0.11.0"
 "aqua:gitleaks/gitleaks" = "8.30.0"
 ```
 
-`aqua:` プレフィックスを使うと、aqua レジストリに登録されているツールもインストールできます。
-他にも `cargo:`, `go:`, `npm:` 等のバックエンドが利用可能です。
-
-uv は高速な Python パッケージマネージャです。mise で uv 自体のバージョンを管理し、uv で Python のバージョンと依存関係を管理するという組み合わせがおすすめです。
-
-### 3.4. ローカルでの使い方
-
-```bash
-# ツールをインストール
-mise install
-
-# mise 経由でコマンドを実行
-mise exec -- pre-commit --version
-mise exec -- shellcheck --version
-```
+仕事柄 Python と向き合うことが多いので uv を真っ先に書いていますね。
+mise で uv 自体のバージョンを管理し、uv で Python のバージョンと依存関係を管理するという組み合わせでいきましょう。
 
 ## 4. pre-commit: 統一ガードレールの定義
 
@@ -130,14 +115,13 @@ mise exec -- shellcheck --version
 
 @[card](https://pre-commit.com/)
 
-pre-commit は複数の Linter/Formatter をまとめて実行するツールです。
-GitHub Actions で `pre-commit run --all-files` を実行することで、PR の内容をチェックできます。
-ローカル環境がある場合は、コミット前フックとしても使えます。
+pre-commit は Git hook を設定ファイルで管理するツールです。
+ローカルでも GitHub Actions でも同じチェックを実行できます。
 
 ### 4.2. `repo: local` + `mise exec --` パターン
 
-pre-commit の設定で `repo: local` を使うと、ローカルにインストールされたツールをフックとして使えます。
-ここで `mise exec --` を組み合わせると、mise で管理されたツールを使えます。
+pre-commit の設定で `repo: local` を使うと、ローカルにインストールされたツールを hook として使えます。
+ここに `mise exec --` を組み合わせると、mise で管理されたツールを使えます。
 
 ```yaml:.pre-commit-config.yaml
 default_stages: [pre-commit]
@@ -183,14 +167,28 @@ repos:
         entry: mise exec -- shellcheck
         language: system
         types: [shell]
+
+      - id: ruff-check
+        name: ruff check
+        entry: mise exec -- uv run --no-sync ruff check --fix
+        language: system
+        types: [python]
+
+      - id: ruff-format
+        name: ruff format
+        entry: mise exec -- uv run --no-sync ruff format
+        language: system
+        types: [python]
 ```
 
 ### 4.3. ローカル環境での活用 (オプション)
 
-ローカル環境がある場合は、コミット前フックとしても活用できます。
+ローカル環境で pre-commit hook を活用できます。
+
+どの道 GitHub Actions でチェックされるので必須ではありませんが、ローカルで事前に問題を検出できるため便利です。
 
 ```bash
-# pre-commit フックをインストール
+# pre-commit hook をインストール
 pre-commit install
 
 # これ以降、git commit 時に自動でチェックが走る
@@ -205,7 +203,7 @@ GitHub Actions でチェックされる前にローカルで問題を検出で�
 
 ### 5.1. PR に対してチェックを実行
 
-どの環境から PR が作られても、GitHub Actions で統一されたガードレールを実行します。
+どの環境から PR が作られても最後の砦として GitHub Actions にて統一されたガードレールを実行します。
 
 ```yaml:.github/workflows/pre-commit.yaml
 name: pre-commit
@@ -316,8 +314,13 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 
 @[card](https://github.com/gitleaks/gitleaks)
 
-コード内にハードコードされたシークレット (APIキー、パスワードなど) を検出します。
-コミット前に検出できるため、シークレットがリポジトリに混入するのを防げます。
+コード内にハードコードされたシークレット (API キー、パスワード、トークンなど) を検出します。
+
+防げる事故の例
+
+- AI がサンプルコードを生成したとき、API キーっぽい文字列 (`API_KEY=xxx`) が含まれていた
+- 環境変数をコピペしたとき、うっかり本番の認証情報が混入
+- AWS 認証情報、GitHub トークン、データベース接続文字列などの漏洩
 
 ### 7.2. actionlint / pinact / zizmor: GitHub Actions セキュリティ
 
@@ -329,11 +332,24 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 @[card](https://github.com/suzuki-shunsuke/pinact)
 @[card](https://github.com/zizmorcore/zizmor)
 
+防げる事故の例
+
+- actionlint: `branches` を `branch` とタイポ、存在しないランナーラベルの指定
+- pinact: アクションを `v1` のようなミュータブルタグで指定 → サプライチェーン攻撃のリスク (tj-actions 事件など)
+- zizmor: テンプレートインジェクション脆弱性、過剰な権限設定、`pull_request_target` の危険な使用
+
 ### 7.3. shellcheck: シェルスクリプト品質
 
 @[card](https://www.shellcheck.net/)
 
 シェルスクリプトの一般的な問題を検出します。
+
+### 7.4. ruff: Python Linter/Formatter
+
+@[card](https://docs.astral.sh/ruff/)
+
+Python コードの lint と format を高速に実行します。
+`mise exec -- uv run --no-sync ruff check --fix` で uv 経由で実行できます。
 
 ## 8. まとめ
 
