@@ -372,10 +372,6 @@ pre-commit による lint に加えて、テストもガードレールとして
           install_args: --yes
           cache: true
 
-      - name: Install dependencies
-        run: |
-          mise exec -- uv sync
-
       - name: Run tests
         run: |
           mise exec -- uv run pytest
