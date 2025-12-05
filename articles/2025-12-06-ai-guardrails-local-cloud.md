@@ -276,7 +276,7 @@ AI が pre-commit hook を無視することがたまにあるのですが GitHu
 
 ### 5.1. PR に対してチェックを実行
 
-どの環境から PR が作られても最後の砦として GitHub Actions にて統一されたガードレールを実行します。
+どの環境から PR が作られても GitHub Actions でチェックしてくれます。
 
 ```yaml:.github/workflows/pre-commit.yaml
 name: pre-commit
