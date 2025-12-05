@@ -475,7 +475,8 @@ automerge 機能を使えば、Renovate が作成した PR を CI が通った�
 @[card](https://docs.astral.sh/ruff/)
 
 Python コードの lint と format を高速に実行します。
-`mise exec -- uv run --no-sync ruff check --fix` のように uv 経由で実行できます。
+uv で管理されるライブラリを使った場合の設定の書き味の紹介のために記載してます。
+設定しがいがあるツールで私は今学習中になります。
 
 ## 8. ブランチ保護ルール ～最後の砦～
 
