@@ -22,11 +22,9 @@ published_at: 2025-12-06 07:00
 業務上よく経験することとして、クラウド IDE からコミットしたり AI コーディングエージェントが直接 PR を作成したりするケースが増えています。
 以前は例えば `.editorconfig` でローカルのエディタ設定を統一するだけで統制は取れていたと思いますが、今は編集環境が多様化してしまっているので対応が必要です。
 
-本記事ではどこで PR を作っても同じガードレールが機能する構成を紹介します。
+本記事ではローカルで pre-commit を整備しておくだけで GitHub Actions でも同じように機能するガードレールの構成を紹介します。
 
 ## 2. この記事で紹介する構成
-
-3つのツールを組み合わせて「PR作成環境を問わない統一ガードレール」を実現します。
 
 ```mermaid
 flowchart TB
@@ -38,12 +36,16 @@ flowchart TB
     設定ファイル --> ローカル & CI
 
     subgraph ローカル
+        Vim[Vim/Neovim]
+        VSCode[VSCode]
         L[pre-commit hook]
     end
+    Vim --> L
+    VSCode --> L
 
     Cloud[クラウド IDE] -->|PR| CI
     AI[AI エージェント] -->|PR| CI
-    ローカル -->|PR| CI
+    L -->|PR| CI
 
     subgraph CI[GitHub Actions]
         D[pre-commit run]
@@ -52,46 +54,48 @@ flowchart TB
     CI --> P[ブランチ保護ルール]
     P -->|マージ| M[main]
 
-    E[Renovate] -.->|自動更新| 設定ファイル
+    E[Renovate] -.->|PR自動作成によるアップデート| 設定ファイル
 
     style L fill:#ff6b6b,color:#fff
     style D fill:#ff6b6b,color:#fff
     style P fill:#ff6b6b,color:#fff
 ```
 
-ポイント
+簡単に解説
 
 - mise: ツールのバージョンを設定ファイルで一元管理
 - pre-commit: ガードレールを定義。ローカルでも GitHub Actions でも同じチェックを実行
 - Renovate: ガードレールを継続的に更新
 - ブランチ保護ルール: 最後の砦として直接 push や force push を防止
 
-## 3. mise: ツールバージョン管理
+## 3. mise
 
 ### 3.1. mise とは
 
 @[card](https://mise.jdx.dev/)
 
 mise は開発ツールのバージョンを設定ファイルで管理するツールです。
-asdf の後継として開発され、より高速でシンプルな体験を提供します。
+asdf の後継として開発されています。
 
 主な利点
 
+- mise.toml による宣言的なバージョン管理
 - クロスプラットフォーム
 - 多様なバックエンド (aqua, cargo, go, npm 等からもインストール可能)
-- `mise install` で全員が同じ環境を再現
 
 注意点
 
-- バックエンドによってはビルドが必要になるので環境によってはインストールに失敗することがあります
+- 任意の環境で任意のツールを動かせるわけではなく、各ツールのドキュメントに従う必要があります
 
 ### 3.2. インストール
+
+このコマンドを実行するだけです。
 
 ```bash
 curl https://mise.run | sh
 ```
 
-詳細は [Installing mise](https://mise.jdx.dev/installing-mise.html) を参照してください。
+@[card](https://mise.jdx.dev/installing-mise.html)
 
 ### 3.3. mise.toml の書き方
 
@@ -111,22 +115,84 @@ shellcheck = "0.11.0"
 "aqua:gitleaks/gitleaks" = "8.30.0"
 ```
 
-仕事柄 Python と向き合うことが多いので uv を真っ先に書いていますね。
-mise で uv 自体のバージョンを管理し、uv で Python のバージョンと依存関係を管理するという組み合わせでいきましょう。
+uv は Python のパッケージマネージャですがそれ自体も mise で管理できます。
+mise で uv 自体のバージョンを管理し、uv で Python のバージョンとライブラリを管理するという組み合わせ、オススメです。
 
-## 4. pre-commit: 統一ガードレールの定義
+参考のために以下に雑に運用している私の mise.toml を載せておきます。
+開発に必要なツールは全て mise.toml に書けるのではないかと思っています。
+
+:::details 盛り盛り mise.toml（参考）
+
+```toml:mise.toml
+[settings]
+experimental = true
+
+[tools]
+# Language Runtimes
+deno  = "2.5.6"
+go    = "latest"
+node  = "24"
+rust  = "latest"
+uv    = "latest"
+
+# CLI Tools
+act             = "latest"
+awscli          = "latest"
+databricks-cli  = "latest"
+fd              = "latest"
+fzf             = "latest"
+gcloud          = "latest"
+gh              = "latest"
+hadolint        = "latest"
+jq              = "latest"
+pre-commit      = "latest"
+ripgrep         = "latest"
+shellcheck      = "latest"
+shfmt           = "latest"
+terraform       = "latest"
+tflint          = "latest"
+
+# Cargo Tools
+"cargo:bat" = "latest"
+"cargo:rumdl" = "latest"
+"cargo:tokei" = "latest"
+
+# Aqua Tools
+# "aqua:evilmartians/lefthook"  = "latest"
+# "aqua:mikefarah/yq"           = "latest"
+"aqua:rhysd/actionlint"          = "latest"
+"aqua:suzuki-shunsuke/pinact"    = "latest"
+"aqua:x-motemen/ghq"             = "latest"
+"aqua:zizmorcore/zizmor"         = "latest"
+"aqua:gitleaks/gitleaks"         = "latest"
+
+# Go Tools
+# "go:github.com/jameswoolfenden/pike"  = { version = "latest" }
+"go:github.com/mattn/efm-langserver"  = { version = "latest" }
+"go:github.com/rhysd/vim-startuptime" = { version = "latest" }
+```
+
+:::
+
+詳細はドキュメントを参照してください。
+
+@[card](https://mise.jdx.dev/dev-tools/)
+
+## 4. pre-commit
 
 ### 4.1. pre-commit とは
 
 @[card](https://pre-commit.com/)
 
-pre-commit は Git hook を設定ファイルで管理するツールです。
+pre-commit は Git hook (Git 操作前後に実行する処理) を設定ファイルで管理するツールです。
 ローカルでも GitHub Actions でも同じチェックを実行できます。
 
 ### 4.2. `repo: local` + `mise exec --` パターン
 
 pre-commit の設定で `repo: local` を使うと、ローカルにインストールされたツールを hook として使えます。
 ここに `mise exec --` を組み合わせると、mise で管理されたツールを使えます。
+この組み合わせにしておくと mise.toml の設定が反映されて、かつキャッシュを活用しやすいので GitHub Actions 上でも高速にチェックを実行できます。
+とりあえずローカルで動くように書いてみて後から GitHub Actions でキャッシュが効くように調整する、という流れがスムーズです。
 
 ```yaml:.pre-commit-config.yaml
 default_stages: [pre-commit]
@@ -194,7 +260,7 @@ repos:
 
 ```bash
 # pre-commit hook をインストール
-pre-commit install
+mise exec -- pre-commit install
 
 # これ以降、git commit 時に自動でチェックが走る
 git add .
@@ -204,7 +270,9 @@ git commit -m "feat: add new feature"
 
 GitHub Actions でチェックされる前にローカルで問題を検出できるため、開発効率が向上します。
 
-## 5. GitHub Actions: CI でガードレールを実行
+AI が pre-commit hook を無視することがたまにあるのですが GitHub Actions で必ずチェックされるので安心です。
+
+## 5. GitHub Actions
 
 ### 5.1. PR に対してチェックを実行
 
@@ -246,24 +314,28 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
           persist-credentials: false
 
+      # mise.toml で定義したツールをキャッシュ
+      # mise.toml が変わったらキャッシュを破棄
       - name: Install mise
-        uses: jdx/mise-action@f0bbb70ab00d70c9eb25f210b7a3a7cc154542a5 # v2.2.3
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
         with:
-          install_args: --yes
+          install_args: --yes  # 確認プロンプトをスキップ
           cache: true
 
+      # pre-commit が hook ごとに作る仮想環境をキャッシュ
+      # .pre-commit-config.yaml が変わったらキャッシュを破棄
+      # restore-keys を設定すると古いキャッシュから差分更新できるが、
+      # ゴミが溜まりやすいのでここではクリーンインストールを優先
       - name: Cache pre-commit
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: |
-            pre-commit-${{ runner.os }}-${{ runner.arch }}-
+          key: |
+            pre-commit-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Run pre-commit
         run: |
@@ -276,7 +348,61 @@ jobs:
 - PR の作成元環境に関係なく、同じチェックが実行される
 - キャッシュを活用して高速化
 
-## 6. Renovate: 継続的な更新
+### 5.3. テストもガードレールに含める
+
+pre-commit による lint に加えて、テストもガードレールとして追加できます。
+別ジョブとして定義し、集約ジョブでまとめてブランチ保護ルールで必須にします。
+
+```yaml
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install mise
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
+        with:
+          install_args: --yes
+          cache: true
+
+      - name: Install dependencies
+        run: |
+          mise exec -- uv sync
+
+      - name: Run tests
+        run: |
+          mise exec -- uv run pytest
+
+  # 集約ジョブ: ブランチ保護ルールではこのジョブを必須に設定
+  # matrix でジョブが増減しても設定変更が不要になる
+  ci:
+    needs: [pre-commit, test]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Check results
+        run: |
+          if [[ "${{ contains(needs.*.result, 'failure') }}" == "true" ]]; then
+            echo "One or more jobs failed"
+            exit 1
+          fi
+          if [[ "${{ contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            echo "One or more jobs were cancelled"
+            exit 1
+          fi
+          echo "All checks passed"
+```
+
+## 6. Renovate
 
 ### 6.1. Renovate とは
 
@@ -302,10 +428,9 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 
 ポイント
 
-- `config:recommended`: 推奨設定を適用。pyproject.toml 更新時に uv.lock も一緒に更新される
+- `config:recommended`: 推奨設定を適用。mise.toml をはじめとして色々と更新対象としてくれる。
 - `:enablePreCommit`: pre-commit のバージョンも自動更新
 - `lockFileMaintenance`: 推移的依存関係を定期的にリフレッシュ (オプション)
-- mise.toml のバージョンも Renovate が自動検出して更新
 
 ## 7. ガードレールの実例
 
@@ -315,7 +440,7 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 
 @[card](https://zenn.dev/azu/articles/ad168118524135)
 
-### 7.1. gitleaks: シークレット検出
+### 7.1. gitleaks
 
 @[card](https://github.com/gitleaks/gitleaks)
 
@@ -327,7 +452,7 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 - 環境変数をコピペしたとき、うっかり本番の認証情報が混入
 - AWS 認証情報、GitHub トークン、データベース接続文字列などの漏洩
 
-### 7.2. actionlint / pinact / zizmor: GitHub Actions セキュリティ
+### 7.2. actionlint / pinact / zizmor
 
 - actionlint: GitHub Actions ワークフローの構文チェック
 - pinact: アクションのバージョンを SHA でピン留め
@@ -343,20 +468,20 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 - pinact: アクションを `v1` のようなミュータブルタグで指定 → サプライチェーン攻撃のリスク (tj-actions 事件など)
 - zizmor: テンプレートインジェクション脆弱性、過剰な権限設定、`pull_request_target` の危険な使用
 
-### 7.3. shellcheck: シェルスクリプト品質
+### 7.3. shellcheck
 
 @[card](https://www.shellcheck.net/)
 
 シェルスクリプトの一般的な問題を検出します。
 
-### 7.4. ruff: Python Linter/Formatter
+### 7.4. ruff
 
 @[card](https://docs.astral.sh/ruff/)
 
 Python コードの lint と format を高速に実行します。
-`mise exec -- uv run --no-sync ruff check --fix` で uv 経由で実行できます。
+`mise exec -- uv run --no-sync ruff check --fix` のように uv 経由で実行できます。
 
-## 8. ブランチ保護ルール: 最後の砦
+## 8. ブランチ保護ルール ～最後の砦～
 
 ここまでのガードレールを設定しても、ブランチ保護ルールがなければ force push で全て無効化できてしまいます。
 GitHub のリポジトリ設定でブランチ保護ルールを設定しましょう。
@@ -367,7 +492,7 @@ Settings → Rules → Rulesets から設定できます。
 
 - Restrict deletions: ブランチ削除を禁止
 - Require a pull request before merging: PR 必須 (直接 push 禁止)
-- Require status checks to pass: ステータスチェック必須 (pre-commit の CI が通らないとマージ不可)
+- Require status checks to pass: ステータスチェック必須。5.3 で紹介した集約ジョブ (`ci`) を指定すると、lint とテスト両方の成功が必須になる
 - Block force pushes: force push 禁止
 
 ### 8.2. 防げる事故の例
@@ -380,10 +505,3 @@ Settings → Rules → Rulesets から設定できます。
 ## 9. まとめ
 
 ツールを組み合わせることで、PR 作成環境を問わない統一ガードレールを実現できます。
-
-- mise: ツールバージョンの一元管理
-- pre-commit: 統一されたチェックの定義
-- Renovate: ガードレールの継続的な更新
-- ブランチ保護ルール: 最後の砦
-
-ローカル環境、クラウド IDE、どこから PR を作っても同じチェックが走ります。ぜひ試してみてください。
