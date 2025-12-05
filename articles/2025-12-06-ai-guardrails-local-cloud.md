@@ -410,6 +410,7 @@ pre-commit による lint に加えて、テストもガードレールとして
 
 Renovate は依存関係を自動更新するボットです。
 mise.toml や pre-commit のバージョンも自動で更新 PR を作成してくれます。
+automerge 機能を使えば CI が通った PR を自動でマージすることも可能です。
 
 ### 6.2. 設定ファイル
 
