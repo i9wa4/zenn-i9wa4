@@ -54,7 +54,7 @@ flowchart TB
     CI --> P[ブランチ保護ルール]
     P -->|マージ| M[main]
 
-    E[Renovate] -.->|PR自動作成によるアップデート| 設定ファイル
+    E[Renovate] -.->|PR自動作成によるアップデート| 設定ファイル & CI
 
     style L fill:#ff6b6b,color:#fff
     style D fill:#ff6b6b,color:#fff
@@ -65,7 +65,7 @@ flowchart TB
 
 - mise: ツールのバージョンを設定ファイルで一元管理
 - pre-commit: ガードレールを定義。ローカルでも GitHub Actions でも同じチェックを実行
-- Renovate: ガードレールを継続的に更新
+- Renovate: mise.toml、pre-commit、GitHub Actions で使用するアクションを継続的に更新
 - ブランチ保護ルール: 最後の砦として直接 push や force push を防止
 
 ## 3. mise
@@ -121,7 +121,7 @@ mise で uv 自体のバージョンを管理し、uv で Python のバージョ
 参考のために以下に雑に運用している私の mise.toml を載せておきます。
 開発に必要なツールは全て mise.toml に書けるのではないかと思っています。
 
-:::details 盛り盛り mise.toml（参考）
+:::details 盛り盛り mise.toml (参考)
 
 ```toml:mise.toml
 [settings]
@@ -405,7 +405,6 @@ pre-commit による lint に加えて、テストもガードレールとして
 @[card](https://docs.renovatebot.com/)
 
 Renovate は依存関係を自動更新するボットです。
-mise.toml や pre-commit のバージョンも自動で更新 PR を作成してくれます。
 automerge 機能を使えば、Renovate が作成した PR を CI が通ったら自動でマージすることも可能です。
 
 ### 6.2. 設定ファイル
@@ -425,7 +424,7 @@ automerge 機能を使えば、Renovate が作成した PR を CI が通った�
 
 ポイント
 
-- `config:recommended`: 推奨設定を適用。mise.toml をはじめとして色々と更新対象としてくれる。
+- `config:recommended`: 推奨設定を適用。mise.toml や GitHub Actions で使用するアクション (SHA ピン留め含む) など色々と更新対象としてくれる。
 - `:enablePreCommit`: pre-commit のバージョンも自動更新
 - `lockFileMaintenance`: 推移的依存関係を定期的にリフレッシュ (オプション)
 
@@ -452,7 +451,7 @@ automerge 機能を使えば、Renovate が作成した PR を CI が通った�
 ### 7.2. actionlint / pinact / zizmor
 
 - actionlint: GitHub Actions ワークフローの構文チェック
-- pinact: アクションのバージョンを SHA でピン留め
+- pinact: アクションのバージョンを SHA でピン留め (Renovate が SHA ごと更新してくれるので、初回のピン留めに使う)
 - zizmor: GitHub Actions のセキュリティ脆弱性を検出
 
 @[card](https://github.com/rhysd/actionlint)
