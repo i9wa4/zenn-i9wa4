@@ -49,10 +49,14 @@ flowchart TB
         D[pre-commit run]
     end
 
+    CI --> P[ブランチ保護ルール]
+    P -->|マージ| M[main]
+
     E[Renovate] -.->|自動更新| 設定ファイル
 
     style L fill:#ff6b6b,color:#fff
     style D fill:#ff6b6b,color:#fff
+    style P fill:#ff6b6b,color:#fff
 ```
 
 ポイント
@@ -60,6 +64,7 @@ flowchart TB
 - mise: ツールのバージョンを設定ファイルで一元管理
 - pre-commit: ガードレールを定義。ローカルでも GitHub Actions でも同じチェックを実行
 - Renovate: ガードレールを継続的に更新
+- ブランチ保護ルール: 最後の砦として直接 push や force push を防止
 
 ## 3. mise: ツールバージョン管理
 
@@ -351,13 +356,34 @@ mise.toml や pre-commit のバージョンも自動で更新 PR を作成して
 Python コードの lint と format を高速に実行します。
 `mise exec -- uv run --no-sync ruff check --fix` で uv 経由で実行できます。
 
-## 8. まとめ
+## 8. ブランチ保護ルール: 最後の砦
 
-3つのツールを組み合わせることで、PR作成環境を問わない統一ガードレールを実現できます。
+ここまでのガードレールを設定しても、ブランチ保護ルールがなければ force push で全て無効化できてしまいます。
+GitHub のリポジトリ設定でブランチ保護ルールを設定しましょう。
+
+### 8.1. 推奨設定
+
+Settings → Rules → Rulesets から設定できます。
+
+- Restrict deletions: ブランチ削除を禁止
+- Require a pull request before merging: PR 必須 (直接 push 禁止)
+- Require status checks to pass: ステータスチェック必須 (pre-commit の CI が通らないとマージ不可)
+- Block force pushes: force push 禁止
+
+### 8.2. 防げる事故の例
+
+- AI エージェントが main ブランチに直接 push してしまう
+- レビューなしでマージされてしまう
+- force push で履歴が書き換えられる
+- CI をスキップしてマージされる
+
+## 9. まとめ
+
+ツールを組み合わせることで、PR 作成環境を問わない統一ガードレールを実現できます。
 
 - mise: ツールバージョンの一元管理
 - pre-commit: 統一されたチェックの定義
 - Renovate: ガードレールの継続的な更新
+- ブランチ保護ルール: 最後の砦
 
-ローカル環境、クラウド IDE、どこから PR を作っても同じチェックが走ります。
-設定ファイルをリポジトリに追加するだけで始められます。ぜひ試してみてください。
+ローカル環境、クラウド IDE、どこから PR を作っても同じチェックが走ります。ぜひ試してみてください。
