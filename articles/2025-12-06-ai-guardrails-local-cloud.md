@@ -37,7 +37,7 @@ flowchart TB
 
     subgraph ローカル
         Vim[Vim/Neovim]
-        VSCode[VSCode]
+        VSCode[VS Code]
         L[pre-commit hook]
     end
     Vim --> L
